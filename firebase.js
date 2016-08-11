@@ -42,4 +42,13 @@ data.ref().on('child-added', function(childSnapshot, prevChildKey){
 	var tFrequency = childSnapshot.val().frequency;
 	var tFirstTrain = childSnapshot.val().firstTrain;
 
-})
+	var differenceTimes = moment().diff(moment.unix(tFirstTrain), "minutes");
+	var tRemainder = moment().diff(moment.unix(tFirstTrain), "minutes") % tFrequency ;
+	var tMinutes = tFrequency - tRemainder;
+
+	var tArrival = moment().add(tMinutes, "m").format("hh:mm A"); 
+
+	//create table
+	$("#trainTable > tbody").append("<tr><td>" + tName + "</td><td>" + tDestination + "</td><td>" + tFrequency + "</td><td>" + tArrival + "</td><td>" + tMinutes + "</td></tr>");
+
+});
